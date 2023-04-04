@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, RichUtils, Modifier } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import "./TextEditor.css";
-
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
@@ -32,30 +31,6 @@ export default class TextEditor extends Component {
     });
   };
 
-  handleKeyCommand = (e) => {
-    if (e === "split-block") {
-      const newEditorState = RichUtils.insertSoftNewline(
-        this.state.editorState
-      );
-      if (newEditorState !== this.state.editorState) {
-        this.setState(newEditorState);
-      }
-    } else {
-      const editorState = this.state.editorState;
-      const currentContent = editorState.getCurrentContent();
-      const selection = editorState.getSelection();
-      const textWithEntity = Modifier.splitBlock(currentContent, selection);
-
-      this.setState({
-        editorState: EditorState.push(
-          editorState,
-          textWithEntity,
-          "split-block"
-        ),
-      });
-    }
-  };
-
   render() {
     const { editorState, isSaveActive } = this.state;
     const retainNewLine = () => {
@@ -71,7 +46,7 @@ export default class TextEditor extends Component {
     return (
       <>
         {isSaveActive ? (
-          <div>
+          <div className="editorContainer">
             <div style={{ border: "1px solid black", borderRadius: "4px" }}>
               <div
                 style={{ background: "#f5f5f5", minHeight: "120px" }}
@@ -99,11 +74,10 @@ export default class TextEditor extends Component {
             </div>
           </div>
         ) : (
-          <div>
+          <div className="editorContainer">
             <div style={{ border: "1px solid black", borderRadius: "4px" }}>
               <Editor
                 editorState={editorState}
-                handleKeyCommand={this.handleKeyCommand}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"

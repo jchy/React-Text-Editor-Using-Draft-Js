@@ -1,3 +1,7 @@
+.editorContainer{
+    width: 80%;
+    margin: auto;
+}
 .editorClassName{
     padding: 0px 10px;
 }
