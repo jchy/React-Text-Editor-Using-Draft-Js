@@ -3,7 +3,7 @@
 Steps to run this project : 
 - Clone this project by running the following command in you terminal:
 ```js
-  git@github.com:jchy/React-Text-Editor-Using-Draft-Js.git
+  git clone git@github.com:jchy/React-Text-Editor-Using-Draft-Js.git
 ```
 
 - Now navigate inside the React-Text-Editor-Using-Draft-Js directory by running the following command into your terminal:
