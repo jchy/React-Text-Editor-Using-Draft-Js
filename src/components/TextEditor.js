@@ -33,7 +33,6 @@ export default class TextEditor extends Component {
 
   render() {
     const { editorState, isSaveActive } = this.state;
-    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     const retainNewLine = () => {
       return draftToHtml(convertToRaw(editorState.getCurrentContent()))
         .split("\n")
@@ -46,7 +45,7 @@ export default class TextEditor extends Component {
               var span = document.createElement('span');
               span.innerHTML = hyperLinkString;
               return span.textContent || span.innerText;
-            };    
+            };
             return extractLinkContent(item);
           }
           else {
