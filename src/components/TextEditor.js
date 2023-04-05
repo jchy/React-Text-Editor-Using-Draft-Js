@@ -33,14 +33,26 @@ export default class TextEditor extends Component {
 
   render() {
     const { editorState, isSaveActive } = this.state;
+    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     const retainNewLine = () => {
-        return draftToHtml(convertToRaw(editorState.getCurrentContent()))
-              .split("\n")
-              .map((item) => {
-                if (item === "<p></p>") {
-                  return "</br>"
-                } else return item;
-              }).join("");
+      return draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        .split("\n")
+        .map((item) => {
+          if (item === "<p></p>") {
+            return "</br>";
+          } 
+          else if(item.includes('http') || item.includes('www.')){
+            function extractLinkContent(hyperLinkString) {
+              var span = document.createElement('span');
+              span.innerHTML = hyperLinkString;
+              return span.textContent || span.innerText;
+            };    
+            return extractLinkContent(item);
+          }
+          else {
+            return item;}
+        })
+        .join("");
     };
 
     return (
@@ -52,7 +64,7 @@ export default class TextEditor extends Component {
                 style={{ background: "#f5f5f5", minHeight: "120px" }}
                 className="saveTextcontainer"
                 dangerouslySetInnerHTML={{
-                  __html: retainNewLine()
+                  __html: retainNewLine(),
                 }}
               ></div>
             </div>
